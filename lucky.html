@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Number</title>
+</head>
+<body onload="loadinput()">
+<!-- <body> -->
+
+<h1> Lucky Number</h1>
+<small>輸入要轉換的英文或數字串</small>
+<input type="text" maxlength="30" id="inputstr">
+<button onclick="query()">轉換</button>
+
+<div>
+    <small>Result</small>
+    <div id = "result"></div>
+
+</div>
+
+</body>
+</html>
+
+
+<script>
+    let numberTable = [
+        {name: '伏位',
+         codes: ['11', '22', '33', '44', '66', '77', '88', '99']},
+        {name: '延年',
+         codes: ['19', '26', '34', '43', '62', '78', '87', '91']},
+        {name: '生氣',
+         codes: ['14', '28', '39', '41', '67', '76', '82', '93']},
+        {name: '天醫',
+         codes: ['13', '27', '31', '49', '68', '72', '86', '94']},
+        {name: '禍害',
+         codes: ['17', '23', '32', '46', '64', '71', '89', '98']},
+        {name: '六煞',
+         codes: ['16', '29', '38', '47', '61', '74', '83', '92']},
+        {name: '絕命',
+         codes: ['12', '21', '37', '48', '69', '73', '84', '96']},
+        {name: '五鬼',
+         codes: ['18', '24', '36', '42', '63', '79', '81', '97']},
+
+        ]
+
+    let inputstr = null
+
+    function loadinput() {
+        inputstr = document.getElementById('inputstr')
+        // inputstr.value = localStorage.getItem('inputstr')
+    }
+
+    let rs = []
+
+    let search = (ids, coupons) => {
+        let _rs = ids.map((id) => {
+            let words = []
+            numberTable.map((word) => {
+                word.codes.map((code) => {
+                  if (id.slice(-code.length) === code) {
+                    words.push(`${word.name} [${code}]`)
+                  }
+                })
+            })
+            return {
+                    id: id,
+                    words: words
+                }
+        })
+        return _rs
+      }
+
+    // 字母轉數字 alphabet
+    function abcTonum(a) {
+            var str = a.toLowerCase().split("");
+            var al = str.length;
+            var getCharNumber = function (charx) {
+                return charx.charCodeAt() - 96;
+            };
+            var numout = 0;
+            var charnum = 0;
+            for (var i = 0; i < al; i++) {
+                charnum = getCharNumber(str[i]);
+                numout += charnum * Math.pow(26, al - i - 1);
+            };
+            return numout.toString().padStart(2, "0");
+        }
+
+    function render(_rs) {
+        let result = document.getElementById('result')
+        result.innerHTML = ''
+        _rs.map((r) => {
+          let h3 = document.createElement('h3')
+          h3.appendChild(document.createTextNode(r.id))
+          result.appendChild(h3)
+
+          let span = document.createElement('span')
+          if (r.words.length > 0) {
+            let ul = document.createElement('ul')
+            r.words.map((w) => {
+              let li = document.createElement('li')
+              li.appendChild(document.createTextNode(w))
+              ul.appendChild(li)
+            })
+            result.appendChild(ul)
+          } else {
+            span.appendChild(document.createTextNode('NULL'))
+            result.appendChild(span)
+          }
+        })
+    }
+
+    var abcpattern = new RegExp("[A-Za-z]+")
+
+    var zeropattern = new RegExp("[0]+")
+
+    function query() {
+        // inputstr.style.display = null
+        let inputlist = []
+        let inputstrs = ''
+        let inputstrs_mid = ''
+        // let inputstrs = inputstr.value.split(',').map((_inputstr) => _inputstr.trim())
+        let inputstrs_abc = inputstr.value.trim().toString() 
+        for (let i = 0; i< inputstrs_abc.length; i++){
+            if (abcpattern.test(inputstrs_abc[i])){
+                inputstrs += abcTonum(inputstrs_abc[i])
+            }
+            else{
+                inputstrs += inputstrs_abc[i]
+            }
+        }
+        console.log(inputstrs)
+
+        // 處理159 951
+        
+        inputstrs = inputstrs.replace("159", "1919")
+        inputstrs = inputstrs.replace("951", "9191")
+
+        console.log(inputstrs)     
+
+        // 處裡中間5
+        
+        inputstrs_mid = inputstrs.slice(1, inputstrs.length-1)
+
+
+        inputstrs_mid = inputstrs_mid.replace("5", "")
+        console.log(inputstrs_mid)
+
+        inputstrs = inputstrs.slice(0, 1) + inputstrs_mid + inputstrs.slice(-1)
+        console.log(inputstrs.slice(0, 1))
+        console.log(inputstrs)
+
+
+        // 22切割
+        for (let i = 0; i < inputstrs.length-1; i++) {
+            inputlist.push(inputstrs.slice(i,i+2))
+        }
+
+        console.log(inputlist)
+
+        // 處理0
+        for (let i = 0; i < inputlist.length; i++){
+            // console.log(inputlist[i])
+            if (inputlist[i].includes("0")){
+                var num = inputlist[i].slice(0, 1)
+                if (num == "0"){
+                    num = inputlist[i].slice(-1)
+                }
+                // console.log(num)
+                inputlist[i] = num + num
+            }
+            if (inputlist[i].includes("5")){
+                var num = inputlist[i].slice(0, 1)
+                if (num == "5"){
+                    num = inputlist[i].slice(-1)
+                }
+                // console.log(num)
+                inputlist[i] = num + num
+            }
+        }
+        console.log(inputlist)
+
+        // localStorage.setItem('inputstr', inputlist.toString())
+
+        rs = search(inputlist, numberTable)
+        render(rs)
+        // document.getElementById('mask').style.display = 'block'
+    }
+
+
+</script>
