@@ -130,22 +130,23 @@
                 inputstrs += inputstrs_abc[i]
             }
         }
-        console.log(inputstrs)
+        console.log('字母轉數字:' + inputstrs)
 
         // 處理159 951
         
-        inputstrs = inputstrs.replace("159", "1919")
-        inputstrs = inputstrs.replace("951", "9191")
+        inputstrs = inputstrs.replace('159', '1919')
+        inputstrs = inputstrs.replace('951', '9191')
 
-        console.log(inputstrs)     
+        console.log('159,951:' + inputstrs)     
 
         // 處裡中間5
         
         inputstrs_mid = inputstrs.slice(1, inputstrs.length-1)
+        console.log("取中間數字串:" + inputstrs_mid)
 
-
-        inputstrs_mid = inputstrs_mid.replace("5", "")
-        console.log(inputstrs_mid)
+        
+        inputstrs_mid = inputstrs_mid.replaceAll('5', '')
+        console.log("移除中間5:" + inputstrs_mid)
 
         inputstrs = inputstrs.slice(0, 1) + inputstrs_mid + inputstrs.slice(-1)
         console.log(inputstrs.slice(0, 1))
