@@ -133,9 +133,12 @@
         console.log('字母轉數字:' + inputstrs)
 
         // 處理159 951
-        
-        inputstrs = inputstrs.replace('159', '1919')
-        inputstrs = inputstrs.replace('951', '9191')
+        /*
+        1594159 => 19 91 19 94 41 19 91 19
+        1590159 => 19 91 19 99 91 19 91 19
+        */
+        inputstrs = inputstrs.replaceAll('159', '1919')
+        inputstrs = inputstrs.replaceAll('951', '9191')
 
         console.log('159,951:' + inputstrs)     
 
@@ -149,7 +152,6 @@
         console.log("移除中間5:" + inputstrs_mid)
 
         inputstrs = inputstrs.slice(0, 1) + inputstrs_mid + inputstrs.slice(-1)
-        console.log(inputstrs.slice(0, 1))
         console.log(inputstrs)
 
 
@@ -161,20 +163,45 @@
         console.log(inputlist)
 
         // 處理0
+        /*
+        開頭是0
+        結尾是0
+        中間是0
+        連續2個0
+        連續3個0
+        */
+        var num = '' 
         for (let i = 0; i < inputlist.length; i++){
             // console.log(inputlist[i])
-            if (inputlist[i].includes("0")){
-                var num = inputlist[i].slice(0, 1)
-                if (num == "0"){
-                    num = inputlist[i].slice(-1)
-                }
-                // console.log(num)
+            if (inputlist[i].includes("00") && i != 0){
+                num = inputlist[i-1].slice(1, 2)
                 inputlist[i] = num + num
             }
+
+            if (inputlist[i].includes("0")){
+                if (i == 0){
+                    num = inputlist[i].slice(1, 2)
+                    inputlist[i] = num + inputlist[i].slice(1, 2)
+                }
+                else{
+                    if (inputlist[i].slice(0, 1) == 0){
+                        num = inputlist[i-1].slice(0, 1)
+                        inputlist[i] = num + inputlist[i].slice(1, 2)
+                    }
+                    else if(inputlist[i].slice(1, 2) == 0){
+                        num = inputlist[i].slice(0, 1)
+                        inputlist[i] = num + num
+                    }
+                }
+                // console.log(num)
+
+            }
+
+
             if (inputlist[i].includes("5")){
-                var num = inputlist[i].slice(0, 1)
+                num = inputlist[i].slice(0, 1)
                 if (num == "5"){
-                    num = inputlist[i].slice(-1)
+                    num = inputlist[i].slice(1, 2)
                 }
                 // console.log(num)
                 inputlist[i] = num + num
