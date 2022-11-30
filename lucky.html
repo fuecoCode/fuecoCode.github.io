@@ -182,12 +182,18 @@
         }
         console.log(inputlist)
 
-        // localStorage.setItem('inputstr', inputlist.toString())
+        // localStorage.setItem('inputstr', inputstr)
 
         rs = search(inputlist, numberTable)
         render(rs)
         // document.getElementById('mask').style.display = 'block'
     }
 
+    var el = document.getElementById("inputstr")
 
+    el.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+            query()
+        }
+    })
 </script>
