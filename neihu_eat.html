@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeiHu Good Good Eat</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+    <h1>NeiHu Good Good Eat</h1>
+    
+    <button onclick="diner_go()"> EAT Start </button> <br><br><br><br><br>
+    <button onclick="drink_go()"> Drink Start </button> <br>
+</body>
+</html>
+
+
+<script>
+
+    let diner_list = [  "吉野家", "麥當勞", "八方雲集", "雞吉君", "濠記水餃",
+                        "老先覺", "潮味決", "波可碗", "墨魚廚房", "方石頭",
+                        "墨羚", "西湖市場", "sukiya", "小學日", "漢堡王", 
+                        "牛排", "美麗華", "信義", "夜市", "北車",
+                        "番茄牛肉麵", "摩斯", "subway", "超商", "鹹酥雞",
+                        "滷味", "鐵板燒", "義大利麵", "河粉", "泰式",
+                        "肯德基", "炸雞", "雞湯", "瀧禾", "燒臘",
+                        
+    ]
+
+    let drink_list = [  "50嵐", "約翰紅茶", "一沐日", "麻古", "Jiate", 
+                        "龜記", "迷克夏", "青芽摘", "鳥泥", "可不可",
+                        "Comebuy", "一手私藏", "水巷茶弄", "白巷子",
+                        "再睡五分鐘"
+                    ]
+
+    function random_idx(list) {
+        // body...
+        var max = list.length - 1;
+        var min = 0;
+        return Math.floor(Math.random() * (max - min + 1)) + min ;
+    }
+
+    function diner_go(){
+        var idx = random_idx(diner_list);
+        console.log(idx);
+
+        alert(diner_list[idx]);
+    }
+
+    function drink_go(){
+        var idx = random_idx(drink_list);
+        console.log(idx);
+
+        alert(drink_list[idx]);
+    }
+
+
+</script>
