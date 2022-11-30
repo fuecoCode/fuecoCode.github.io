@@ -5,20 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucky Number</title>
 </head>
-<body onload="loadinput()">
+<body>
 <!-- <body> -->
 
-<h1> Lucky Number</h1>
-<small>輸入要轉換的英文或數字串</small>
-<input type="text" maxlength="30" id="inputstr">
-<button onclick="query()">轉換</button>
+    <h1> Lucky Number</h1>
+    <small>輸入要轉換的英文或數字串</small>
+    <input type="text" maxlength="30" id="inputstr">
+    <button onclick="query()">轉換</button>
 
-<div>
-    <small>Result</small>
-    <div id = "result"></div>
+    <div>
+        <h3>Result</h3>
+        <div id = "result">
+            <br>
+        </div>
 
-</div>
+    </div>
+    <div class="footer">
+        <small>
+            Contact Me: <br>
+            <a href='mailto:chchen1025@gmail.com' target='_blank' class='url'> Mail </a> <br>
+            <a href='https://github.com/masahiro1025/' target='_blank' class='url'> Git </a> <br>
+            <a href='https://github.com/masahiro1025/masahiro1025.github.io/blob/master/lucky.html' target='_blank' class='url'>Open Source</a> <br>
 
+        </small>
+    </div>
 </body>
 </html>
 
@@ -45,11 +55,6 @@
         ]
 
     let inputstr = null
-
-    function loadinput() {
-        inputstr = document.getElementById('inputstr')
-        // inputstr.value = localStorage.getItem('inputstr')
-    }
 
     let rs = []
 
@@ -112,7 +117,6 @@
     }
 
     var abcpattern = new RegExp("[A-Za-z]+")
-
     var zeropattern = new RegExp("[0]+")
 
     function query() {
@@ -121,6 +125,8 @@
         let inputstrs = ''
         let inputstrs_mid = ''
         // let inputstrs = inputstr.value.split(',').map((_inputstr) => _inputstr.trim())
+        // 
+        inputstr = document.getElementById('inputstr')
         let inputstrs_abc = inputstr.value.trim().toString() 
         for (let i = 0; i< inputstrs_abc.length; i++){
             if (abcpattern.test(inputstrs_abc[i])){
@@ -130,7 +136,7 @@
                 inputstrs += inputstrs_abc[i]
             }
         }
-        console.log('字母轉數字:' + inputstrs)
+        // console.log('字母轉數字:' + inputstrs)
 
         // 處理159 951
         /*
@@ -140,19 +146,19 @@
         inputstrs = inputstrs.replaceAll('159', '1919')
         inputstrs = inputstrs.replaceAll('951', '9191')
 
-        console.log('159,951:' + inputstrs)     
+        // console.log('159,951:' + inputstrs)     
 
         // 處裡中間5
         
         inputstrs_mid = inputstrs.slice(1, inputstrs.length-1)
-        console.log("取中間數字串:" + inputstrs_mid)
+        // console.log("取中間數字串:" + inputstrs_mid)
 
         
         inputstrs_mid = inputstrs_mid.replaceAll('5', '')
-        console.log("移除中間5:" + inputstrs_mid)
+        // console.log("移除中間5:" + inputstrs_mid)
 
         inputstrs = inputstrs.slice(0, 1) + inputstrs_mid + inputstrs.slice(-1)
-        console.log(inputstrs)
+        // console.log(inputstrs)
 
 
         // 22切割
@@ -160,7 +166,7 @@
             inputlist.push(inputstrs.slice(i,i+2))
         }
 
-        console.log(inputlist)
+        // console.log(inputlist)
 
         // 處理0
         /*
@@ -207,20 +213,18 @@
                 inputlist[i] = num + num
             }
         }
-        console.log(inputlist)
-
-        // localStorage.setItem('inputstr', inputstr)
+        // console.log(inputlist)
 
         rs = search(inputlist, numberTable)
         render(rs)
-        // document.getElementById('mask').style.display = 'block'
+    
     }
 
     var el = document.getElementById("inputstr")
-
     el.addEventListener("keydown", function(e){
         if(e.key === "Enter"){
             query()
         }
     })
+
 </script>
