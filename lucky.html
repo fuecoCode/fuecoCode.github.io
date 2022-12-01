@@ -157,7 +157,7 @@
         inputstrs_mid = inputstrs_mid.replaceAll('5', '')
         // console.log("移除中間5:" + inputstrs_mid)
 
-        inputstrs = inputstrs.slice(0, 1) + inputstrs_mid + inputstrs.slice(-1)
+        inputstrs = inputstrs[0] + inputstrs_mid + inputstrs.slice(-1)
         // console.log(inputstrs)
 
 
@@ -179,25 +179,52 @@
         var num = '' 
         for (let i = 0; i < inputlist.length; i++){
             // console.log(inputlist[i])
-            if (inputlist[i].includes("00") && i != 0){
-                num = inputlist[i-1].slice(1, 2)
-                inputlist[i] = num + num
+            if (inputlist[i].includes("00")){
+                if (i != 0)
+                {
+                    num = inputlist[i-1][1]
+                    inputlist[i] = num + num
+                }
+                else if (i == 0){
+                    for (let j = 1 ; j < inputlist.length; j++){
+                        if (!inputlist[j].includes("00")){
+                            if (inputlist[j][0] == 0)
+                            {
+                                num = inputlist[j][1]
+                            }
+                            else if (inputlist[j][1] == 0)
+                            {
+                                num = inputlist[j][0]
+                            }
+                            inputlist[i] = num + num
+                            break
+                        }
+                    }
+                }
             }
 
             if (inputlist[i].includes("0")){
                 if (i == 0){
-                    num = inputlist[i].slice(1, 2)
-                    inputlist[i] = num + inputlist[i].slice(1, 2)
+                    if (inputlist[i][0] == 0){
+                        num = inputlist[i][1]
+                        inputlist[i] = num + num
+
+                    }
+                    else if (inputlist[i][1] == 0){
+                        num = inputlist[i][0]
+                        inputlist[i] = num + num
+
+                    }
                 }
                 else{
-                    if (inputlist[i].slice(0, 1) == 0){
-                        num = inputlist[i-1].slice(0, 1)
-                        inputlist[i] = num + inputlist[i].slice(1, 2)
+                    if (inputlist[i][0] == 0){
+                        num = inputlist[i-1][0]
+                        inputlist[i] = num + inputlist[i][1]
                     }
-                    else if(inputlist[i].slice(1, 2) == 0){
-                        num = inputlist[i].slice(0, 1)
+                    else if(inputlist[i][1] == 0){
+                        num = inputlist[i][0]
                         inputlist[i] = num + num
-                    }
+                     }
                 }
                 // console.log(num)
 
@@ -205,15 +232,15 @@
 
 
             if (inputlist[i].includes("5")){
-                num = inputlist[i].slice(0, 1)
+                num = inputlist[i][0]
                 if (num == "5"){
-                    num = inputlist[i].slice(1, 2)
+                    num = inputlist[i][1]
                 }
                 // console.log(num)
                 inputlist[i] = num + num
             }
         }
-        // console.log(inputlist)
+        console.log(inputlist)
 
         rs = search(inputlist, numberTable)
         render(rs)
