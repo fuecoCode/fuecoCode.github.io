@@ -123,8 +123,8 @@
         })
     }
 
-    var abcpattern = new RegExp("[A-Za-z]+")
-    var zeropattern = new RegExp("[0]+")
+    var abcpattern = new RegExp("[A-Z|a-z]+")
+    var inputpattern = new RegExp("[^0-9|A-Z|a-z]")
 
     function query() {
         // inputstr.style.display = null
@@ -137,11 +137,16 @@
         // alert(inputstr.value);
         if (inputstr.value == '')
         {
-            alert('無效的輸入。');
+            alert('無效的輸入。 (輸入為空)');
             return;
         }
 
         let inputstrs_abc = inputstr.value.trim().toString() 
+        // alert(inputstrs_abc);
+        if (inputpattern.test(inputstrs_abc)){
+            alert('無效的輸入。 (含有非數字或字母)');
+            return;
+        }
         for (let i = 0; i< inputstrs_abc.length; i++){
             if (abcpattern.test(inputstrs_abc[i])){
                 inputstrs += abcTonum(inputstrs_abc[i])
