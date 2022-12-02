@@ -95,12 +95,19 @@
     function render(_rs) {
         let result = document.getElementById('result')
         result.innerHTML = ''
-        _rs.map((r) => {
-          let h3 = document.createElement('h3')
-          h3.appendChild(document.createTextNode(r.id))
-          result.appendChild(h3)
 
-          let span = document.createElement('span')
+        let listid = document.createElement('h3')
+        _rs.map((r) =>{
+            listid.appendChild(document.createTextNode(r.id + ' ')) 
+        })
+
+        result.appendChild(listid)
+
+        _rs.map((r) => {
+          // let h3 = document.createElement('h3')
+          // h3.appendChild(document.createTextNode(r.id))
+          // result.appendChild(h3)
+
           if (r.words.length > 0) {
             let ul = document.createElement('ul')
             r.words.map((w) => {
@@ -127,6 +134,13 @@
         // let inputstrs = inputstr.value.split(',').map((_inputstr) => _inputstr.trim())
         // 
         inputstr = document.getElementById('inputstr')
+        // alert(inputstr.value);
+        if (inputstr.value == '')
+        {
+            alert('無效的輸入。');
+            return;
+        }
+
         let inputstrs_abc = inputstr.value.trim().toString() 
         for (let i = 0; i< inputstrs_abc.length; i++){
             if (abcpattern.test(inputstrs_abc[i])){
