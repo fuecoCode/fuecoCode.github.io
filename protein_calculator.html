@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Calculator</title>
+</head>
+<body>
+<!-- <body> -->
+
+    <h1> Protein Calculator</h1>
+    <table>
+    <td>
+    <div>
+
+        容量：<input type="text" maxlength="30" id="size"> g <br>
+        價格：<input type="text" maxlength="30" id="price"> 元 <br>
+        一份容量：<input type="text" maxlength="30" id="unit_size"> g <br>
+        一份蛋白質：<input type="text" maxlength="30" id="unit_protein"> g <br>
+        預期1g幾元：<input type="text" maxlength="30" id="want_price"> 元 <br>
+
+        <br>
+
+        <button onclick="query()">轉換</button>
+    </div>
+    </td>
+
+    <td>
+    <div>
+        <span id="unit25_protein"></span>g蛋白質/25g <br>
+        <span id="unit25_price"></span>元/25g <br>
+        <span id="unit_price"></span>元/1g <br>
+        <span id="total_protein"></span>g蛋白質/份 <br>
+        <span id="want_price_total"></span>元 <br>
+
+
+    </div>
+    </td>
+    </table>
+
+    <div class="footer">
+        <small>
+            Contact Me: <br>
+            <a href='mailto:chchen1025@gmail.com' target='_blank' class='url'> Mail </a> <br>
+            <a href='https://github.com/masahiro1025/' target='_blank' class='url'> Git </a> <br>
+            <a href='https://github.com/masahiro1025/masahiro1025.github.io/blob/master/lucky.html' target='_blank' class='url'>Open Source</a> <br>
+
+        </small>
+    </div>
+</body>
+</html>
+
+
+<script>
+    
+    // 字母轉數字 alphabet
+    function abcTonum(a) {
+            var str = a.toLowerCase().split("");
+            var al = str.length;
+            var getCharNumber = function (charx) {
+                return charx.charCodeAt() - 96;
+            };
+            var numout = 0;
+            var charnum = 0;
+            for (var i = 0; i < al; i++) {
+                charnum = getCharNumber(str[i]);
+                numout += charnum * Math.pow(26, al - i - 1);
+            };
+            return numout.toString().padStart(2, "0");
+        }
+
+    var abcpattern = new RegExp("[A-Z|a-z]+")
+    var inputpattern = new RegExp("[^0-9|A-Z|a-z]")
+
+    function query() {
+        let size = parseFloat(document.getElementById('size').value.trim().toString() )
+        let price = parseFloat(document.getElementById('price').value.trim().toString() )
+        let unit_size = parseFloat(document.getElementById('unit_size').value.trim().toString() )
+        let unit_protein = parseFloat(document.getElementById('unit_protein').value.trim().toString() )
+        let want_price = parseFloat(document.getElementById('want_price').value.trim().toString() )
+
+        let unit25_protein = unit_protein / unit_size *25
+        let unit25_price = price / (size / 25)
+        let unit_price = price /  (size / unit_size * unit_protein)
+        let total_protein = unit_protein / unit_size * size
+        let want_price_total = total_protein * want_price
+        
+        console.log("unit25_protein", unit25_protein)
+        console.log("unit25_price", unit25_price)
+        console.log("total_protein", total_protein)
+        document.getElementById('unit25_protein').innerHTML = unit25_protein
+        document.getElementById('unit25_price').innerHTML = unit25_price
+        document.getElementById('unit_price').innerHTML = unit_price
+        document.getElementById('total_protein').innerHTML = total_protein
+        document.getElementById('want_price_total').innerHTML = want_price_total
+    }
+
+    var el = document.getElementById("unit_protein")
+    el.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+            query()
+        }
+    })
+
+</script>
